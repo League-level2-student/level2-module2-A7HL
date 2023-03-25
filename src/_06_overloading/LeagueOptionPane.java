@@ -1,5 +1,6 @@
 package _06_overloading;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.IOException;
 
@@ -23,11 +24,15 @@ public class LeagueOptionPane {
 		//    The message parameter is what we want to show on our pop-up
 		JFrame frame = new JFrame("Message");
 		JPanel pane = new JPanel();
+		JLabel image = new JLabel();
 		JLabel label = new JLabel(message);
+		
 		
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		
 		frame.add(pane);
+		image.setIcon(loadImage("league.png"));
+		pane.add(image);
 		pane.add(label);
 		frame.setSize(new Dimension(400,100));
 		
@@ -46,15 +51,18 @@ public class LeagueOptionPane {
 	public void showMessageDialog(String message, String title) {
 		JFrame frame = new JFrame(title);
 		JPanel pane = new JPanel();
+		JLabel image = new JLabel();
 		JLabel label = new JLabel(message);
 		
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		
 		frame.add(pane);
+		image.setIcon(loadImage("league.png"));
+		pane.add(image);
 		pane.add(label);
 		frame.setSize(new Dimension(400,100));
 		
-		//frame.pack();
+		frame.pack();
 		frame.setVisible(true);
 		
 	// 2. Uncomment the line of code below. It sets the location of our frame to the center of the screen
@@ -65,7 +73,26 @@ public class LeagueOptionPane {
 	
 	// 6. Create another showMessageDialog() method that lets us choose the Message, Title, and Image
 	//    3 String parameters (one for the message, one for the title, and one for the fileName)
-	
+	public JPanel showMessageDialog(String message,String title,String im) {
+		JFrame frame = new JFrame(title);
+		JPanel pane = new JPanel();
+		JLabel image = new JLabel();
+		JLabel label = new JLabel(message);
+		
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		
+		frame.add(pane);
+		image.setIcon(loadImage(im));
+		pane.add(image);
+		pane.add(label);
+		frame.setSize(new Dimension(400,100));
+		
+		frame.pack();
+		frame.setVisible(true);
+		
+		frame.setLocationRelativeTo(null);
+		return pane;
+	}
 	// 7. Call this method in the Runner class
 	
 	// CHALLENGE: 
@@ -84,7 +111,29 @@ public class LeagueOptionPane {
 		//	5. Call this method in the Runner class
 		//
 		// WHY DID WE DO THIS? - because we were able to overload this method by calling one of the other methods inside of it
-	
+	public void showMessageDialog(String message,String title, String im, Color col) {
+		/*JFrame frame = new JFrame(title);
+		JPanel pane = new JPanel();
+		JLabel image = new JLabel();
+		JLabel label = new JLabel(message);
+		*/
+		JPanel panel = showMessageDialog(message,title, im);
+		panel.setBackground(col);
+		
+		/*frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		
+		frame.add(pane);
+		image.setIcon(loadImage(im));
+		pane.add(image);
+		pane.add(label);
+		frame.setSize(new Dimension(400,100));
+		
+		frame.pack();
+		frame.setVisible(true);
+		
+		frame.setLocationRelativeTo(null);
+		*/
+	}
 	
 	public static ImageIcon loadImage(String fileName) {
 		try {
