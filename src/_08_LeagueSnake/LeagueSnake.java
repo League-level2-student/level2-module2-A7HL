@@ -67,10 +67,14 @@ public class LeagueSnake extends PApplet {
     public void draw() {
     	
         background(0,0,0);
+        
         drawFood();
         move();
         drawSnake();
+        manageTail();
         eat();
+        text(numEat,20,20);
+        
     }
 
     void drawFood() {
@@ -86,12 +90,18 @@ public class LeagueSnake extends PApplet {
     	
     	rect(head.x,head.y,10,10);
     	
+    	drawTail();
+    	
     }
 
     void drawTail() {
         // Draw each segment of the tail
+    
         fill(0,255,0);
-        rect(head.x,head.y,10,10);
+        for(int i =0; i< tail.size();i++) {
+        	
+        	rect(tail.get(i).x,tail.get(i).y,10,10);
+        }
     }
 
     /*
@@ -104,16 +114,21 @@ public class LeagueSnake extends PApplet {
         // After drawing the tail, add a new segment at the "start" of the tail and
         // remove the one at the "end"
         // This produces the illusion of the snake tail moving.
-    	checkTailCollision();
-    	drawTail();
-    	tail.add(head);
     	
+    	checkTailCollision();
+    	tail.add(new Segment(head.x,head.y));
+    	tail.remove(0);
 
     }
 
     void checkTailCollision() {
         // If the snake crosses its own tail, shrink the tail back to one segment
-        
+        for(int i = 0; i<tail.size();i++) {
+        	if(head.x== tail.get(i).x&&head.y==tail.get(i).y) {
+        		tail.removeAll(tail);
+        		numEat = 0;
+        	}
+        }
     }
 
     /*
@@ -180,7 +195,10 @@ public class LeagueSnake extends PApplet {
         // food appear
         if(head.x==foodX&&head.y==foodY) {
         	numEat++;
+        	tail.add(new Segment(head.x,head.y));
         	dropFood();
+        	System.out.println(numEat);
+        	
         }
     }
 
